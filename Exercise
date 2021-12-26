@@ -1,0 +1,18 @@
+Introduction to Deep Learning - Exercise #3
+
+Autoencoding and Generative models for the MNISTdigit dataset
+
+The dataset consists of 60,000 (+10,000 test) images of scanned hand-written digits (0-9). The dataset contains the digits values as labels. The original images are of size 28-by-28 pixels (but better be resized to 32x32 using zero padding for easier processing). The images are monochromatic, i.e., have a single brightness channel with values between zero (black) and one (white).
+
+In this exercise we design both classification and generative networks over this dataset.
+
+Specific tasks:
+
+Autoencoder (to AE). Define a convolutional autoencoder to encode (and decode) the images into a small dimensional latent (around d=10). Explore the use of a FC layer at the coarsest level in order to gain a better ratio, better the reconstruction accuracy and the embedded dimension d. Report these tests and the scores obtained. The best practice of implementing this code is by defining Encoder and Decoder modules (torch.nn.Module).
+Decorrelation. In the following experiment we will investigate the connection between dimensional reduction and dependencies (redundancies) in the representation. Do that by computing the Pearson cross correlation between different coordinates of the latent codes (based on a few thousands encoded images), and come up with a single value measuring the overall correlation. Plot this value with respect to the latent space dimension d (over at least 4 values of d). Explain the trend you observe and justify it in your report.
+Transfer Learning. Use the pre-trained encoder from the previous section by holding its weights constant, and attaching it to a small MLP (over its output latent space) and train the latter to classify the digits (recall that MNIST is labeled) using a small fraction of the labels in the dataset (a single or few percents). Compare the performance of this solution next to the option of training the entire network (i.e., allow the encoder weights to train as well) over this small number of labels. Report all the choices made (e.g., latent space dimension, MLP arch., and number of labels used, etc.), and the results obtained by each of the two training approaches.
+Generative Adversarial Networks (GAN). Implement a GAN in latent space, i.e., define an MLP generator network that maps some easy-to-sample distribution into the latet codes you produced above. Once trained, this generator can be combined with the (pre-trained) decoder to generate novel images. The GAN’s latent space can be of an even lower space dimension than the latent codes. Show in your report several sampled digits as well as the following interpolation task. Interpolating between digits can be done by aL1+(1-a)L2 where L1 and L2 are the latent codes (ideally two different digits), and increasing a gradually from 0 to 1. Show also the results you get when interpolating in the latent space. Which interpolation performs better? Explain.
+
+Digit-Specific Generator. Assume the user would like to specify the digit that will be produced by the generator. In this case, the randomness should apply only to the shape of the chosen digit but not its value. Think of a way to incorporate (as well as train) a user input to control the generator. Training multiple independent generator networks for each digit is not a possibility. Describe your choice and show the variability of the images you get for a particular digit.
+
+We are expecting you to report and elaborate on every practical task in the pdf, with your own words and analysis of what you’ve done. Include everything that you think is crucial for us to understand your way of thinking.
